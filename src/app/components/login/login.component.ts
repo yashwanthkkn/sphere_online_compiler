@@ -33,9 +33,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
     console.log(this.userForm.value);
-    this.userService.getOrAddUser(this.userForm)
+    this.userService.getOrAddUser(this.userForm.value)
       .subscribe((data:any)=>{
-          this.userService.setUser({username : data[0].name , email : data[0].email})
+          this.userService.setUser({username : data.name , email : data.email})
           this.router.navigate(['/compiler']);
         }
       )    

@@ -12,6 +12,9 @@ export class CompilerComponent implements OnInit {
   @ViewChild("editor")
   private editor!: ElementRef<HTMLElement>;
   user : any;
+  submissions : any = []
+
+  output : any;
   ngAfterViewInit(): void {
     ace.config.set("fontSize", "14px");
     ace.config.set('basePath', 'https://unpkg.com/ace-builds@1.4.12/src-noconflict');
@@ -20,7 +23,7 @@ export class CompilerComponent implements OnInit {
     aceEditor.session.setValue(
 `class Main{
     public static void main(String args[]){
-      // code here
+      System.out.print("Hello world");
     }
 }`
     );
@@ -32,17 +35,49 @@ export class CompilerComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getUser();
+    (async()=>{
+      this.submission.getSubmissions()
+        .subscribe(
+          (data)=>{
+            this.submissions = data;
+          },
+          (err)=>{
+            console.log(err);
+          }
+        )
+    })()
   }
 
   runCode(){
+  
     let aceEditor = ace.edit(this.editor.nativeElement);
     let srcCode = aceEditor.getSession().getValue();
     let stdin = (<HTMLInputElement>document.getElementById('src')).value;
+    let stdout = document.getElementById('output-card');
     console.log(srcCode,stdin);
-    this.submission.runCode({src:srcCode,stdin:stdin})
+    this.submission.runCode({code:srcCode,input:stdin})
       .subscribe(data=>{
-        console.log(data);
+        this.output = data.output
+      },
+      (err)=>{
+        this.output = err.error.output
       })
   }
 
+
+  saveSubmission(){
+    let aceEditor = ace.edit(this.editor.nativeElement);
+    let srcCode = aceEditor.getSession().getValue();
+    this.submission.saveSubmission(srcCode)
+      .subscribe(
+        (data)=>{
+          console.log(data)
+          // this.submissions.push({})
+        },
+        (err)=>{
+          console.log(err);
+          
+        }
+      )
+  }
 }
