@@ -91,9 +91,7 @@ export class CompilerComponent implements OnInit {
     this.submission.saveSubmission(srcCode).subscribe(
       (data) => {
         this.saving = false;
-
-        console.log(data);
-        // this.submissions.push({})
+        this.submissions.push(data);
       },
       (err) => {
         console.log(err);
