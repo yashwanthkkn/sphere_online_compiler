@@ -1,4 +1,6 @@
 import { Component, ElementRef, ViewChild,AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from './services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -6,4 +8,9 @@ import { Component, ElementRef, ViewChild,AfterViewInit } from '@angular/core';
 })
 export class AppComponent {
   title = 'sphere-app';
+  constructor(public userService : UserService, public router : Router){}
+  logout(){
+   this.userService.setUser({});
+   this.router.navigate(['/']);
+  }
 }

@@ -1,7 +1,10 @@
 <div class="container-fluid">
     <div class="row bg-light py-1">
-        <div class="col-12 text-center">
-            <span class="fs-2">Sphere <i class="fas fa-life-ring"></i> Compiler</span> 
+        <div class="col-10 text-center">
+            <span class="fs-2 center">Sphere <i class="fas fa-life-ring"></i> Compiler</span>
+        </div>
+        <div *ngIf="router.url !== '/'" class="col-2 text-center">
+          <button class="btn-logout btn-danger" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
         </div>
     </div>
 </div>
