@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'sphere-app';
   constructor(public userService : UserService, public router : Router){}
   logout(){
-   this.userService.setUser({});
+   this.userService.clearUser();
    this.router.navigate(['/']);
   }
 }

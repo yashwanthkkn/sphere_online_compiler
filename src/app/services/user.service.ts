@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -41,6 +39,7 @@ export class UserService {
   }
 
   clearUser(){
+    sessionStorage.removeItem('user');
     this.user = null;
   }
 
