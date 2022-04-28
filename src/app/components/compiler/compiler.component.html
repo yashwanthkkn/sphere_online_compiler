@@ -1,52 +1,72 @@
 <div class="wrap">
-    <div class="user-wrap">
-        <div class="user-info">
-            <div class="user-icon">{{user.username[0]}}</div>
-            <div class="username">{{user.username}}</div>
-        </div>
-        <div class="user-submissions">
-            <div class="submisson" *ngFor="let submission of submissions; let i = index">
-                <div class="info">
-                    <div class="title">Submission #{{i}}</div>
-                    <div class="date text-secondary">12/1/23</div>
-                </div>
-                <div class="controls">
-                    <a  href="{{submission.filePath}}" >
-                        <button><i class="fas fa-download"></i></button>
-                    </a>
-                </div>
-            </div>
-        </div>
+  <div class="user-wrap">
+    <div class="user-info">
+      <div class="user-icon">{{ user.username[0] }}</div>
+      <div class="username">{{ user.username }}</div>
     </div>
-    <div class="editor-wrap">
-        
-        <div class="code-editor">
-            <div class="editor-info">
-                <div class="lang-info">
-                    <div>Code Editor</div>
-                    <div class="lang">Lang : Java</div>
-                </div>
-
-                <div class="controls">
-                    <button class="save-btn" (click)="saveSubmission()"><i class="fas fa-save"></i> Save</button>
-                    <button class="run-btn" (click)="runCode()"><i class="fas fa-play"></i> Run</button>
-                </div>
-            </div>
-            <div class="app-ace-editor" #editor></div>
+    <div class="user-submissions">
+      <div
+        class="submisson"
+        *ngFor="let submission of submissions; let i = index"
+      >
+        <div class="info">
+          <div class="title">Submission #{{ i }}</div>
+          <div class="date text-secondary">12/1/23</div>
+        </div>
+        <div class="controls">
+          <a href="{{ submission.filePath }}">
+            <button><i class="fas fa-download"></i></button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="editor-wrap">
+    <div class="code-editor">
+      <div class="editor-info">
+        <div class="lang-info">
+          <div>Code Editor</div>
+          <div class="lang">Lang : Java</div>
         </div>
 
-        <div class="io">
-            <div class="input">
-                <div class="input-title">Input</div>
-                <textarea name="src" id="src" cols="30" rows="10" class="input-data">
+        <div class="controls">
+          <button
+            class="save-btn"
+            (click)="saveSubmission()"
+            [disabled]="saving"
+          >
+            <i class="fas fa-save"></i> Save
+          </button>
+          <button class="run-btn" (click)="runCode()" [disabled]="submitted">
+            <span *ngIf="submitted" class="loader"></span>
+            <i *ngIf="!submitted" class="fas fa-play"></i>
+            Run
+          </button>
+        </div>
+      </div>
+      <div class="app-ace-editor" #editor></div>
+    </div>
+
+    <div class="io">
+      <div class="input">
+        <div class="input-title">Input</div>
+        <textarea name="src" id="src" cols="30" rows="10" class="input-data">
 5
 1 2 3 4 5
-                </textarea>
-            </div>
-            <div class="output">
-                <div class="output-title">Output</div>
-                <div class="output-data" id="output-card" readonly>{{output}}</div>
-            </div>
+                </textarea
+        >
+      </div>
+      <div class="output">
+        <div class="output-title">{{ outputTitle }}</div>
+        <div
+          class="output-data"
+          [style]="hasError ? 'color: red' : ''"
+          id="output-card"
+          readonly
+        >
+          {{ output }}
         </div>
+      </div>
     </div>
+  </div>
 </div>
