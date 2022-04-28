@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router : Router) {
     let user = sessionStorage.getItem('user')
+
     if(user)
       this.user = JSON.parse(user);
-   }
+      router.navigate(["/compiler"]);
+    }
   url = " https://d7y6e81tph.execute-api.us-east-1.amazonaws.com/dev"
   user : any = null;
 
